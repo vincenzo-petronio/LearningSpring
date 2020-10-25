@@ -26,7 +26,7 @@ public class TicketController {
     @Autowired
     private TicketService ticketService;
 
-    @GetMapping("api/v1/tickets")
+    @GetMapping("/tickets")
     public ResponseEntity<List<TicketResDto>> GetTickets() {
         List<TicketResDto> result = ticketService.GetListTicket().stream()
                 .map(t -> modelMapper.map(t, TicketResDto.class)).collect(Collectors.toUnmodifiableList());
@@ -36,7 +36,7 @@ public class TicketController {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("api/v1/tickets/{id}")
+    @GetMapping("/tickets/{id}")
     public ResponseEntity<TicketResDto> GetTicket(@PathVariable long id) {
         Optional<TicketResDto> result = ticketService.GetTicket(id).stream()
                 .map(t -> modelMapper.map(t, TicketResDto.class)).findFirst();
