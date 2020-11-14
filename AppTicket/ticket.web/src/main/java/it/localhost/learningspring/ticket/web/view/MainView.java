@@ -2,7 +2,6 @@ package it.localhost.learningspring.ticket.web.view;
 
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.ComponentEventListener;
-import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Label;
@@ -12,9 +11,6 @@ import com.vaadin.flow.router.Route;
 @Route
 public class MainView extends VerticalLayout {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     private final Button btnGetTickets, btnGetTicket;
@@ -26,6 +22,8 @@ public class MainView extends VerticalLayout {
 
         btnGetTickets = new Button("Get Tickets");
         btnGetTickets.addClickListener(new ComponentEventListener<ClickEvent<Button>>() {
+
+            private static final long serialVersionUID = 2882299594962574915L;
 
             @Override
             public void onComponentEvent(ClickEvent<Button> event) {
@@ -41,6 +39,5 @@ public class MainView extends VerticalLayout {
         });
 
         add(title, btnGetTickets, btnGetTicket, txtMessage);
-
     }
 }
