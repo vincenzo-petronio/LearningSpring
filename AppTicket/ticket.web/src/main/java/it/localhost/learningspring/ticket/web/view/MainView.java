@@ -6,6 +6,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -20,11 +21,15 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
+import it.localhost.learningspring.ticket.web.service.ApiServiceProxy;
+
 @Route
 public class MainView extends VerticalLayout {
 
     @Autowired
     private EurekaClient eurekaClient;
+    @Autowired
+    private ApiServiceProxy apiServiceProxy;
 
     private static final long serialVersionUID = 1L;
 
@@ -43,13 +48,15 @@ public class MainView extends VerticalLayout {
             @Override
             public void onComponentEvent(ClickEvent<Button> event) {
 
+                // recupero le istanze del servizio, poi ne chiamo una in modo random.
                 var instances = eurekaClient.getApplication("ticket-apigtw-service").getInstances();
-                var instanceZero = instances.get(0);
-                URI apiUri = URI.create(String.format("http://%s:%s/api/v1/tickets/", instanceZero.getHostName(),
-                        instanceZero.getPort()));
+                int instanceIndex = instances.size() > 1 ? new Random().nextInt(instances.size()-1) : 0;
+                var instance = instances.get(instanceIndex);
+                URI apiUri = URI.create(
+                        String.format("http://%s:%s/api/v1/tickets/", instance.getHostName(), instance.getPort()));
 
                 try {
-                    txtMessage.setText(getApiAsync(apiUri).get());
+                    txtMessage.setText("" + instanceIndex + ": " + getApiAsync(apiUri).get());
                 } catch (InterruptedException ie) {
                     txtMessage.setText(ie.getMessage());
                 } catch (ExecutionException ee) {
@@ -60,12 +67,10 @@ public class MainView extends VerticalLayout {
 
         btnGetTicket = new Button("Get Ticket - Feign");
         btnGetTicket.addClickListener(e -> {
-            System.out.println("CLICK TICKET");
-            txtMessage.setText("CLICK TICKET");
+            txtMessage.setText(apiServiceProxy.getTicket(2L));
         });
 
         add(title, btnGetTickets, btnGetTicket, txtMessage);
-
     }
 
     // Versione sync
