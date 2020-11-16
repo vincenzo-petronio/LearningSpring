@@ -3,20 +3,12 @@ package it.localhost.learningspring.ticket.api.model;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
-@Entity
 public class Ticket {
 
-    @Id
-    private Long id; // primary key
+    private Long id;
 
-    @Column(name = "code")
     private BigInteger code;
 
-    @Column(name = "created")
     private LocalDateTime created;
 
     public Long getId() {
