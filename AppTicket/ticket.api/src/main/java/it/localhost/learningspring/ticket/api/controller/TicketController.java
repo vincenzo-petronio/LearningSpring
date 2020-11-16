@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.localhost.learningspring.ticket.api.dto.TicketResDto;
-import it.localhost.learningspring.ticket.api.service.TicketService;
+import it.localhost.learningspring.ticket.api.service.TicketsServiceProxy;
 
 @RestController
 public class TicketController {
@@ -24,11 +24,11 @@ public class TicketController {
     private ModelMapper modelMapper;
 
     @Autowired
-    private TicketService ticketService;
+    private TicketsServiceProxy ticketsServiceProxy;
 
     @GetMapping("/tickets")
     public ResponseEntity<List<TicketResDto>> GetTickets() {
-        List<TicketResDto> result = ticketService.GetListTicket().stream()
+        List<TicketResDto> result = ticketsServiceProxy.getTickets().stream()
                 .map(t -> modelMapper.map(t, TicketResDto.class)).collect(Collectors.toUnmodifiableList());
         if (result.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -38,7 +38,7 @@ public class TicketController {
 
     @GetMapping("/tickets/{id}")
     public ResponseEntity<TicketResDto> GetTicket(@PathVariable long id) {
-        Optional<TicketResDto> result = ticketService.GetTicket(id).stream()
+        Optional<TicketResDto> result = ticketsServiceProxy.getTicket(id).stream()
                 .map(t -> modelMapper.map(t, TicketResDto.class)).findFirst();
         if (result.isEmpty()) {
             return ResponseEntity.notFound().build();
