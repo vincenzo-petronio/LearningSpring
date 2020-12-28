@@ -1,0 +1,48 @@
+version: '3.8'
+services:
+    ticket.disco:
+        build:
+            context: ./ticket.disco
+        container_name: cnt_ticket.disco
+        ports:
+            - '6500:6500'
+            # - '6501:443'
+        image: img_ticket.disco
+
+    ticket.api:
+        build:
+            context: ./ticket.api
+        container_name: cnt_ticket.api
+        ports:
+            - '6100:6100'
+        image: img_ticket.api
+        environment:
+            # override della variabile locale definita nell'application.properties'
+            #EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://ticket.disco:6500/eureka
+            - eureka.client.serviceUrl.defaultZone=http://ticket.disco:6500/eureka
+        depends_on:
+            - ticket.disco
+
+    ticket.web:
+        build:
+            context: ./ticket.web
+        container_name: cnt_ticket.web
+        ports:
+            - '6200:6200'
+        image: img_ticket.web
+        environment:
+            - eureka.client.serviceUrl.defaultZone=http://ticket.disco:6500/eureka
+        depends_on:
+            - ticket.disco
+
+    ticket.tickets:
+        build:
+            context: ./ticket.tickets
+        container_name: cnt_ticket.tickets
+        ports:
+            - '6300:6300'
+        image: img_ticket.tickets
+        environment:
+            - eureka.client.serviceUrl.defaultZone=http://ticket.disco:6500/eureka
+        depends_on:
+            - ticket.disco
