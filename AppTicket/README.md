@@ -12,3 +12,4 @@ solo HTTP!!!
 
 # Run
 
+`docker-compose up --build`
