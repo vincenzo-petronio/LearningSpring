@@ -23,17 +23,17 @@ services:
         depends_on:
             - ticket.disco
 
-    ticket.web:
-        build:
-            context: ./ticket.web
-        container_name: cnt_ticket.web
-        ports:
-            - '6200:6200'
-        image: img_ticket.web
-        environment:
-            - eureka.client.serviceUrl.defaultZone=http://ticket.disco:6500/eureka
-        depends_on:
-            - ticket.disco
+    # ticket.web:
+    #     build:
+    #         context: ./ticket.web
+    #     container_name: cnt_ticket.web
+    #     ports:
+    #         - '6200:6200'
+    #     image: img_ticket.web
+    #     environment:
+    #         - eureka.client.serviceUrl.defaultZone=http://ticket.disco:6500/eureka
+    #     depends_on:
+    #         - ticket.disco
 
     ticket.tickets:
         build:
