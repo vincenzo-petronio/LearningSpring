@@ -3,4 +3,4 @@ EXPOSE 6200
 #EXPOSE 443
 WORKDIR /app
 COPY ./build/libs/*.jar ./ticket.web.jar
-CMD ["java","-jar","ticket.web.jar"]
+CMD ["java","-jar", "ticket.web.jar"]

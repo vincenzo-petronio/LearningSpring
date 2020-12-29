@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.4.1'
 	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
 	id 'java'
+	id 'com.vaadin' version '0.14.3.7'
 }
 
 group = 'it.localhost.learningspring'
@@ -38,4 +39,8 @@ dependencyManagement {
 
 test {
 	useJUnitPlatform()
+}
+
+vaadin {
+	productionMode = true
 }
