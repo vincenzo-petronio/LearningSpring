@@ -11,5 +11,9 @@ solo HTTP!!!
 
 
 # Run
+Eseguire la build di ogni project usando gradle:<br />
+`gradlew.bat clean build`
 
-`docker-compose up --build`
+
+Eseguire docker compose:<br />
+`docker-compose up`
