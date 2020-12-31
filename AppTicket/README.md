@@ -11,9 +11,9 @@ solo HTTP!!!
 
 
 # Run
-Eseguire la build di ogni project usando gradle:<br />
-`gradlew.bat clean build`
-
+Eseguire la build di ogni project usando gradle:
+<br />branch master: `gradlew.bat clean build`
+<br />branch jib: `gradlew.bat clean jibDockerBuild`
 
 Eseguire docker compose:<br />
 `docker-compose up`
