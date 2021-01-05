@@ -46,3 +46,12 @@ services:
             - eureka.client.serviceUrl.defaultZone=http://ticket.disco:6500/eureka
         depends_on:
             - ticket.disco
+            - ticket.tickets.db
+
+    ticket.tickets.db:
+        build:
+            context: ./ticket.tickets.db
+        container_name: cnt_ticket.tickets.db
+        ports:
+            - '3306:3306'
+        image: img_ticket.tickets.db
