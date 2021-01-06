@@ -27,11 +27,11 @@ public class Ticket {
         this.code = code;
     }
 
-    public LocalDateTime getCreatedDateTime() {
+    public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreatedDateTime(LocalDateTime created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 }

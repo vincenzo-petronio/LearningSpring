@@ -6,6 +6,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -18,9 +20,12 @@ import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.router.Route;
 
+import it.localhost.learningspring.ticket.web.model.Ticket;
 import it.localhost.learningspring.ticket.web.service.ApiServiceProxy;
 
 @Route
@@ -33,12 +38,15 @@ public class MainView extends VerticalLayout {
 
     private static final long serialVersionUID = 1L;
 
-    private final Button btnGetTickets, btnGetTicket;
+    private final Button btnGetTickets, btnGetTicket, btnNewTicket, btnDelTicket;
     private final Label txtMessage;
+    private final IntegerField txtNumber;
 
     public MainView() {
         H1 title = new H1("Hello Vaadin!");
         txtMessage = new Label();
+
+        txtNumber = new IntegerField("Ticket to GET or DEL");
 
         btnGetTickets = new Button("Get Tickets - HttpClient");
         btnGetTickets.addClickListener(new ComponentEventListener<ClickEvent<Button>>() {
@@ -50,7 +58,7 @@ public class MainView extends VerticalLayout {
 
                 // recupero le istanze del servizio, poi ne chiamo una in modo random.
                 var instances = eurekaClient.getApplication("ticket-apigtw-service").getInstances();
-                int instanceIndex = instances.size() > 1 ? new Random().nextInt(instances.size()-1) : 0;
+                int instanceIndex = instances.size() > 1 ? new Random().nextInt(instances.size() - 1) : 0;
                 var instance = instances.get(instanceIndex);
                 URI apiUri = URI.create(
                         String.format("http://%s:%s/api/v1/tickets/", instance.getHostName(), instance.getPort()));
@@ -67,10 +75,31 @@ public class MainView extends VerticalLayout {
 
         btnGetTicket = new Button("Get Ticket - Feign");
         btnGetTicket.addClickListener(e -> {
-            txtMessage.setText(apiServiceProxy.getTicket(2L));
+            txtMessage.setText(apiServiceProxy.getTicket(txtNumber.getValue()));
         });
 
-        add(title, btnGetTickets, btnGetTicket, txtMessage);
+        btnNewTicket = new Button("Create random Ticket");
+        btnNewTicket.addClickListener(t -> {
+            LocalDateTime dateTimeNow = LocalDateTime.now();
+            int randomCode = (new Random()).nextInt();
+            String jsonTicket = "{\"id\": \"\",\"code\": " + randomCode + ",\"created\": \"" + dateTimeNow + "\"}";
+
+            Ticket ticket = new Ticket();
+            ticket.setCode(randomCode);
+            ticket.setCreated(dateTimeNow);
+            
+            apiServiceProxy.createTicket(ticket);
+        });
+
+        btnDelTicket = new Button("Delete Ticket");
+        btnDelTicket.addClickListener(t -> {
+            apiServiceProxy.deleteTicket(txtNumber.getValue());
+        });
+
+        HorizontalLayout hl = new HorizontalLayout();
+        hl.add(btnGetTickets, btnGetTicket, btnNewTicket, btnDelTicket);
+
+        add(title, txtNumber, hl, txtMessage);
     }
 
     // Versione sync

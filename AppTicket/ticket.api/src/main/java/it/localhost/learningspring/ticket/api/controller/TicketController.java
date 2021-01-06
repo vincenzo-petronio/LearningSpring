@@ -7,11 +7,15 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.localhost.learningspring.ticket.api.dto.TicketResDto;
+import it.localhost.learningspring.ticket.api.model.Ticket;
 import it.localhost.learningspring.ticket.api.service.TicketsServiceProxy;
 
 @RestController
@@ -44,5 +48,18 @@ public class TicketController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(result.get());
+    }
+
+    @PostMapping("/tickets")
+    public ResponseEntity<Ticket> SaveTicket(@RequestBody Ticket ticket) {
+        System.out.println(ticket.getCode() + " - " + ticket.getCreated());
+        Ticket result = ticketsServiceProxy.saveTicket(ticket);
+        return ResponseEntity.ok(result);
+    }
+
+    @DeleteMapping("/tickets/{id}")
+    public ResponseEntity<Long> deleteTicket(@PathVariable long id) {
+        ticketsServiceProxy.deleteTicket(id);
+        return ResponseEntity.ok(id);
     }
 }

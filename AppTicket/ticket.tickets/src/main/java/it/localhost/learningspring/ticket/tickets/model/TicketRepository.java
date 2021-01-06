@@ -1,6 +1,6 @@
 package it.localhost.learningspring.ticket.tickets.model;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface TicketRepository extends JpaRepository<Ticket, Long> {
+public interface TicketRepository extends CrudRepository<Ticket, Long> {
 }

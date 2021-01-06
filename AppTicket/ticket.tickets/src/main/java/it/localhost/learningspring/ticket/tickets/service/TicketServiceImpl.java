@@ -15,7 +15,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public List<Ticket> GetListTicket() {
-        return ticketRepository.findAll();
+        return (List<Ticket>) ticketRepository.findAll();
     }
 
     @Override
@@ -23,4 +23,13 @@ public class TicketServiceImpl implements TicketService {
         return ticketRepository.findById(id);
     }
 
+    @Override
+    public Ticket SaveOrUpdateTicket(Ticket ticket) {
+        return ticketRepository.save(ticket);
+    }
+
+    @Override
+    public void DeleteTicket(long id) {
+        ticketRepository.deleteById(id);
+    }
 }

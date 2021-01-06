@@ -10,4 +10,8 @@ public interface TicketService {
     List<Ticket> GetListTicket();
 
     Optional<Ticket> GetTicket(long id);
+
+    Ticket SaveOrUpdateTicket(Ticket ticket);
+
+    void DeleteTicket(long id);
 }
