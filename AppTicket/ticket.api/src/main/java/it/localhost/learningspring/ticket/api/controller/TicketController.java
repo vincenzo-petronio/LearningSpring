@@ -5,8 +5,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +23,7 @@ import it.localhost.learningspring.ticket.api.service.TicketsServiceProxy;
 @RestController
 public class TicketController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(TicketController.class);
+//    private static final Logger LOG = LoggerFactory.getLogger(TicketController.class);
 //    @Autowired
 //    private Environment environment;
 
@@ -57,7 +55,6 @@ public class TicketController {
 
     @PostMapping(value = "/tickets", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Ticket> SaveTicket(@RequestBody TicketReqDto ticket) {
-        LOG.debug(ticket.getCode() + " - " + ticket.getCreated().toString());
         Ticket t = modelMapper.map(ticket, Ticket.class);
         Ticket result = ticketsServiceProxy.saveTicket(t);
         return ResponseEntity.ok(result);

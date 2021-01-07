@@ -7,13 +7,10 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.netflix.discovery.EurekaClient;
@@ -27,7 +24,6 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.router.Route;
 
-import it.localhost.learningspring.ticket.web.model.Ticket;
 import it.localhost.learningspring.ticket.web.service.ApiServiceProxy;
 
 @Route
@@ -39,7 +35,6 @@ public class MainView extends VerticalLayout {
     private ApiServiceProxy apiServiceProxy;
 
     private static final long serialVersionUID = 1L;
-    private static final Logger LOG = LoggerFactory.getLogger(MainView.class);
 
     private final Button btnGetTickets, btnGetTicket, btnNewTicket, btnDelTicket;
     private final Label txtMessage;
@@ -86,12 +81,6 @@ public class MainView extends VerticalLayout {
             LocalDateTime dateTimeNow = LocalDateTime.now();
             int randomCode = Math.abs((new Random()).nextInt());
             String jsonTicket = "{\"code\": " + randomCode + ",\"created\": \"" + dateTimeNow + "\"}";
-
-//            Ticket ticket = new Ticket();
-//            ticket.setCode(randomCode);
-//            ticket.setCreated(dateTimeNow);
-            
-            LOG.debug(jsonTicket);
             apiServiceProxy.createTicket(jsonTicket);
         });
 
