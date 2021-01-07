@@ -32,7 +32,6 @@ public class TicketsController {
     
     @PostMapping("/tickets")
     public Ticket SaveTicket(@RequestBody Ticket ticket) {
-        System.out.println(ticket.getCode() + " - " + ticket.getCreated());
         return ticketService.SaveOrUpdateTicket(ticket);
     }
     

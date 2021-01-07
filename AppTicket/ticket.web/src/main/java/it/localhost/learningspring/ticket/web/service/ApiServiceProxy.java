@@ -8,16 +8,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import it.localhost.learningspring.ticket.web.model.Ticket;
-
 @FeignClient("ticket-apigtw-service")
 public interface ApiServiceProxy {
 
     @GetMapping("/api/v1/tickets")
     String getTickets();
 
-    @PostMapping("/api/v1/tickets")
-    String createTicket(@RequestBody Ticket ticket);
+    @PostMapping(value = "/api/v1/tickets", consumes = MediaType.APPLICATION_JSON_VALUE)
+    String createTicket(@RequestBody String jsonTicket);
 
     @GetMapping("/api/v1/tickets/{id}")
     String getTicket(@PathVariable("id") long id);

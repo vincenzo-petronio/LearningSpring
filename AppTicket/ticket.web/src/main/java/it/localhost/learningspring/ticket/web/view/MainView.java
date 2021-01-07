@@ -12,6 +12,8 @@ import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.netflix.discovery.EurekaClient;
@@ -37,6 +39,7 @@ public class MainView extends VerticalLayout {
     private ApiServiceProxy apiServiceProxy;
 
     private static final long serialVersionUID = 1L;
+    private static final Logger LOG = LoggerFactory.getLogger(MainView.class);
 
     private final Button btnGetTickets, btnGetTicket, btnNewTicket, btnDelTicket;
     private final Label txtMessage;
@@ -81,14 +84,15 @@ public class MainView extends VerticalLayout {
         btnNewTicket = new Button("Create random Ticket");
         btnNewTicket.addClickListener(t -> {
             LocalDateTime dateTimeNow = LocalDateTime.now();
-            int randomCode = (new Random()).nextInt();
-            String jsonTicket = "{\"id\": \"\",\"code\": " + randomCode + ",\"created\": \"" + dateTimeNow + "\"}";
+            int randomCode = Math.abs((new Random()).nextInt());
+            String jsonTicket = "{\"code\": " + randomCode + ",\"created\": \"" + dateTimeNow + "\"}";
 
-            Ticket ticket = new Ticket();
-            ticket.setCode(randomCode);
-            ticket.setCreated(dateTimeNow);
+//            Ticket ticket = new Ticket();
+//            ticket.setCode(randomCode);
+//            ticket.setCreated(dateTimeNow);
             
-            apiServiceProxy.createTicket(ticket);
+            LOG.debug(jsonTicket);
+            apiServiceProxy.createTicket(jsonTicket);
         });
 
         btnDelTicket = new Button("Delete Ticket");
