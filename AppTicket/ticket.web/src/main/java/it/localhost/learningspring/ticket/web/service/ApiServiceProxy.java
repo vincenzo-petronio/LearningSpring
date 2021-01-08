@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient("ticket-apigtw-service")
 public interface ApiServiceProxy {
 
+    //--- TICKETS ---
+    
     @GetMapping("/api/v1/tickets")
     String getTickets();
 
@@ -22,4 +24,16 @@ public interface ApiServiceProxy {
 
     @DeleteMapping("/api/v1/tickets/{id}")
     String deleteTicket(@PathVariable("id") long id);
+    
+    
+    //--- USERS ---
+    
+    @GetMapping("/api/v1/users")
+    String getUsers();
+
+    @PostMapping(value = "/api/v1/users", consumes = MediaType.APPLICATION_JSON_VALUE)
+    String saveUser(@RequestBody String jsonUser);
+
+    @GetMapping("/api/v1/users/{id}")
+    String getUser(@PathVariable("id") long id);
 }
