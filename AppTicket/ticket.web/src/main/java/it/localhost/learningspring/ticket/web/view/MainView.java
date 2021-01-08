@@ -17,12 +17,14 @@ import com.netflix.discovery.EurekaClient;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouterLink;
 
 import it.localhost.learningspring.ticket.web.service.ApiServiceProxy;
 
@@ -42,6 +44,9 @@ public class MainView extends VerticalLayout {
 
     public MainView() {
         H1 title = new H1("Hello Vaadin!");
+        
+        add(createMenu());
+        
         txtMessage = new Label();
 
         txtNumber = new IntegerField("Ticket to GET or DEL");
@@ -116,5 +121,11 @@ public class MainView extends VerticalLayout {
         HttpRequest httpReq = HttpRequest.newBuilder().uri(uri).build();
         return httpClient.sendAsync(httpReq, BodyHandlers.ofString()).thenApply(HttpResponse::body);
     }
-
+    
+    private Div createMenu() {
+        Div menu = new Div();
+        menu.add(new RouterLink("Home", MainView.class));
+        menu.add(new RouterLink("User", UserView.class));
+        return menu;
+    }
 }
