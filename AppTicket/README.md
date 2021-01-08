@@ -4,6 +4,7 @@
 - API Gateway           http://localhost:6100/
 - Vaadin Web Client     http://localhost:6200/
 - Tickets service       http://localhost:6300/
+- User service          http://localhost:6400/
 
 solo HTTP!!!
 
