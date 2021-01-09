@@ -1,6 +1,7 @@
+--ticket
 CREATE TABLE appticket.ticket(
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    code INT NOT NULL,
+    code BIGINT SIGNED UNIQUE NOT NULL,
     created DATETIME NOT NULL
 );
 insert into ticket(code,created)
