@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import it.localhost.learningspring.ticket.api.dto.UserReqDTO;
 import it.localhost.learningspring.ticket.api.dto.UserResDTO;
-import it.localhost.learningspring.ticket.api.model.User;
 import it.localhost.learningspring.ticket.api.service.UserServiceProxy;
 
 @RestController
@@ -38,12 +37,8 @@ public class UserController {
 
     @PostMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserResDTO> SaveUser(@RequestBody UserReqDTO user) {
-        User userToSave = new User();
-        userToSave.setName(user.getName());
-        userToSave.setSurname(user.getSurname());
-        userToSave.setBirthday(user.getBirhday());
-        User userSaved = userServiceProxy.saveUser(userToSave);
-        UserResDTO userResult = modelMapper.map(userSaved, UserResDTO.class);
-        return ResponseEntity.ok(userResult);
+        UserResDTO userSaved = userServiceProxy.saveUser(user);
+//        UserResDTO userResult = modelMapper.map(userSaved, UserResDTO.class);
+        return ResponseEntity.ok(userSaved);
     }
 }

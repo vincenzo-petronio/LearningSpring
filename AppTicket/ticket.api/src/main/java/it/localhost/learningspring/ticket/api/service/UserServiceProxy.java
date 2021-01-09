@@ -7,14 +7,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import it.localhost.learningspring.ticket.api.model.User;
+import it.localhost.learningspring.ticket.api.dto.UserReqDTO;
+import it.localhost.learningspring.ticket.api.dto.UserResDTO;
 
 @FeignClient("ticket-user-service")
 public interface UserServiceProxy {
 
     @GetMapping("/users")
-    List<User> getUsers();
+    List<UserResDTO> getUsers();
 
     @PostMapping("/users")
-    User saveUser(@RequestBody User user);
+    UserResDTO saveUser(@RequestBody UserReqDTO user);
 }

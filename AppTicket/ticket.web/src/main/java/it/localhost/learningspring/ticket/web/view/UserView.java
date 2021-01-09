@@ -57,7 +57,7 @@ public class UserView extends VerticalLayout {
         NativeButton save = new NativeButton("Save");
         save.addClickListener(event -> {
             ObjectMapper objMapper = new ObjectMapper();
-            User user = new User(); 
+            User user = new User();
             user.setName(tfName.getValue());
             user.setSurname(tfSurname.getValue());
             user.setBirthday(dpBirthday.getValue().toString());
@@ -86,33 +86,39 @@ public class UserView extends VerticalLayout {
 
     private Div createDivResult() {
         Div box = new Div();
+        VerticalLayout vl = new VerticalLayout();
         Button btnGetUsers = new Button("Get Users");
         btnGetUsers.addClickListener(event -> {
             txtResult.setText(userServiceProxy.getUsers());
         });
-
-        box.add(btnGetUsers, txtResult);
+        vl.add(btnGetUsers, txtResult);
+        box.add(vl);
         return box;
     }
 
     class User {
         private String name, surname, birthday;
-        
+
         public String getName() {
             return name;
         }
+
         public void setName(String name) {
             this.name = name;
         }
+
         public String getSurname() {
             return surname;
         }
+
         public void setSurname(String surname) {
             this.surname = surname;
         }
+
         public String getBirthday() {
             return birthday;
         }
+
         public void setBirthday(String birthday) {
             this.birthday = birthday;
         }

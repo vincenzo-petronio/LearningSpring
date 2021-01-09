@@ -2,13 +2,16 @@ package it.localhost.learningspring.ticket.api.dto;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class UserReqDTO {
 
     private String name;
 
     private String surname;
 
-    private Date birhday;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date birthday;
 
     public String getName() {
         return name;
@@ -26,12 +29,12 @@ public class UserReqDTO {
         this.surname = surname;
     }
 
-    public Date getBirhday() {
-        return birhday;
+    public Date getBirthday() {
+        return birthday;
     }
 
-    public void setBirhday(Date birhday) {
-        this.birhday = birhday;
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 
 }
