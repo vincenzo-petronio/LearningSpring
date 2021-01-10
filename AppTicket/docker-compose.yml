@@ -54,6 +54,7 @@ services:
         image: img_ticket.tickets
         environment:
             - eureka.client.serviceUrl.defaultZone=http://ticket.disco:6500/eureka
+            - SPRING_DATASOURCE_URL=jdbc:mariadb://ticket.tickets.db:3306/appticket
         depends_on:
             - ticket.disco
             - ticket.tickets.db
@@ -75,6 +76,7 @@ services:
         image: img_ticket.user
         environment:
             - eureka.client.serviceUrl.defaultZone=http://ticket.disco:6500/eureka
+            - SPRING_DATASOURCE_URL=jdbc:mariadb://ticket.user.db:3307/appticket
         depends_on:
             - ticket.disco
             - ticket.user.db
