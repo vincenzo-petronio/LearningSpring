@@ -1,8 +1,8 @@
 plugins {
-	id 'org.springframework.boot' version '2.4.1'
-	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'org.springframework.boot' version '2.7.0'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
-	id 'com.vaadin' version '0.14.3.7'
+	id 'com.vaadin' version '23.0.10'
 	//id 'com.google.cloud.tools.jib' version '2.7.0'
 }
 
@@ -14,17 +14,18 @@ repositories {
 	mavenCentral()
 	maven { url 'https://repo.spring.io/snapshot' }
 	maven { url 'https://repo.spring.io/milestone' }
+	maven { url = 'https://maven.vaadin.com/vaadin-addons' }
 }
 
 ext {
-	set('vaadinVersion', "14.4.5")
-	set('springCloudVersion', "2020.0.3")
+	set('vaadinVersion', "23.0.10")
+	set('springCloudVersion', "2021.0.3")
 }
 
 dependencies {
-	implementation 'com.vaadin:vaadin-spring-boot-starter:18.0.3'
-	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:3.0.0'
-	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.0.0'
+	implementation 'com.vaadin:vaadin-spring-boot-starter:23.0.10'
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:3.1.3'
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.1.3'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
@@ -44,6 +45,7 @@ test {
 
 vaadin {
 	productionMode = true
+	optimizeBundle = false
 }
 
 // jib {
