@@ -1,14 +1,16 @@
+USE appticket
+
 --ticket
-CREATE TABLE appticket.ticket(
-    id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    code BIGINT SIGNED UNIQUE NOT NULL,
-    created DATETIME NOT NULL
-);
-insert into ticket(code,created)
-values(111222333,'2020-10-18T16:00:00.00000');
-insert into ticket(code,created)
-values(444555666,'2020-11-20T17:00:00.00000');
-insert into ticket(code,created)
-values(777888999,'2020-12-22T18:00:00.00000');
-insert into ticket(code,created)
-values(651423789,'2020-12-24T18:00:00.00000');
+CREATE TABLE `ticket` (
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`code` UUID NOT NULL,
+	`created` DATETIME NOT NULL DEFAULT current_timestamp(),
+	PRIMARY KEY (`id`) USING BTREE,
+	UNIQUE INDEX `code` (`code`) USING BTREE
+)
+ENGINE=InnoDB
+;
+
+
+insert into ticket(code)
+values(UUID());
