@@ -1,55 +1,92 @@
 package it.localhost.learningspring.ticket.user.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
+@Table(name = "user") // annotation non obbligatoria
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 
-    private String name;
+	private String name;
 
-    private String surname;
+	private String surname;
 
-    private Date birthday;
+	private Date birthday;
 
-    public long getId() {
-        return id;
-    }
+	// RELATIONSHIPS
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+	@JsonManagedReference
+	private Set<Contact> contacts = new HashSet<>();
 
-    public String getName() {
-        return name;
-    }
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+	@JsonManagedReference
+	private Set<Address> addresses = new HashSet<>();
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	// GETTERS & SETTERS
 
-    public String getSurname() {
-        return surname;
-    }
+	public long getId() {
+		return id;
+	}
 
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
+	public Set<Contact> getContacts() {
+		return contacts;
+	}
 
-    public Date getBirthday() {
-        return birthday;
-    }
+	public void setContacts(Set<Contact> contacts) {
+		this.contacts = contacts;
+	}
 
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
+	public Set<Address> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(Set<Address> addresses) {
+		this.addresses = addresses;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
 
 }
