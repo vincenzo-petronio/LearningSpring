@@ -3,13 +3,14 @@ package it.localhost.learningspring.ticket.user.service;
 import java.util.List;
 import java.util.Optional;
 
+import it.localhost.learningspring.ticket.user.dto.UserDto;
 import it.localhost.learningspring.ticket.user.model.User;
 
 public interface UserService {
 
-    List<User> GetListUsers();
+    List<UserDto> GetListUsers();
 
-    Optional<User> GetUser(long id);
+    Optional<UserDto> GetUser(long id);
 
-    User SaveUser(UserDTO userDTO);
+    User SaveUser(UserDto userDto);
 }
