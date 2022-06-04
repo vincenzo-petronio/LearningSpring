@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import it.localhost.learningspring.ticket.user.model.Contact;
 import it.localhost.learningspring.ticket.user.model.ContactType;
@@ -69,7 +70,9 @@ class UserRepositoryTests {
 	
 	@Test
 	@Order(4)
+	@Transactional(readOnly = true)
 	void GetContacts() {
+		// Devo usare @Transactional per evitare il LazyInitializationException
 		List<User> users = userRepository.findByNameLike("admin"); 
 		User userAdmin = users.get(0);
 		assertThat(userAdmin.getContacts().size(), equalTo(2));
