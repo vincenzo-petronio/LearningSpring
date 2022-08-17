@@ -3,15 +3,16 @@ package it.localhost.learningspring.ticket.tickets.service;
 import java.util.List;
 import java.util.Optional;
 
+import it.localhost.learningspring.ticket.tickets.dto.TicketDto;
 import it.localhost.learningspring.ticket.tickets.model.Ticket;
 
 public interface TicketService {
 
-    List<Ticket> GetListTicket();
+    List<TicketDto> GetListTicket();
 
-    Optional<Ticket> GetTicket(long id);
+    Optional<TicketDto> GetTicket(long id);
 
-    Ticket SaveOrUpdateTicket(Ticket ticket);
+    Ticket SaveOrUpdateTicket(TicketDto ticket);
 
     void DeleteTicket(long id);
 }

@@ -11,32 +11,33 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.localhost.learningspring.ticket.tickets.dto.TicketDto;
 import it.localhost.learningspring.ticket.tickets.model.Ticket;
 import it.localhost.learningspring.ticket.tickets.service.TicketService;
 
 @RestController
 public class TicketsController {
 
-    @Autowired
-    private TicketService ticketService;
+	@Autowired
+	private TicketService ticketService;
 
-    @GetMapping("/tickets")
-    public List<Ticket> GetTickets() {
-        return ticketService.GetListTicket();
-    }
+	@GetMapping("/tickets")
+	public List<TicketDto> GetTickets() {
+		return ticketService.GetListTicket();
+	}
 
-    @GetMapping("/tickets/{id}")
-    public Optional<Ticket> GetTicket(@PathVariable long id) {
-        return ticketService.GetTicket(id);
-    }
-    
-    @PostMapping("/tickets")
-    public Ticket SaveTicket(@RequestBody Ticket ticket) {
-        return ticketService.SaveOrUpdateTicket(ticket);
-    }
-    
-    @DeleteMapping("/tickets/{id}")
-    public void DeleteTicket(@PathVariable long id) {
-        ticketService.DeleteTicket(id);
-    }
+	@GetMapping("/tickets/{id}")
+	public Optional<TicketDto> GetTicket(@PathVariable long id) {
+		return ticketService.GetTicket(id);
+	}
+
+	@PostMapping("/tickets")
+	public Ticket SaveTicket(@RequestBody TicketDto ticket) {
+		return ticketService.SaveOrUpdateTicket(ticket);
+	}
+
+	@DeleteMapping("/tickets/{id}")
+	public void DeleteTicket(@PathVariable long id) {
+		ticketService.DeleteTicket(id);
+	}
 }
